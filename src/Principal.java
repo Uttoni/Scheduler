@@ -9,14 +9,12 @@ public class Principal {
         List<Integer> arrivalTime = new ArrayList();
         Scheduler scheduler = new Scheduler();
 
-
-        //EXEMPLO PREEMPTIVO
         filaProcessos.addAll(Arrays.asList("P1", "P2", "P3"));
-        burstTime.addAll(Arrays.asList(5, 6, 8));
+        burstTime.addAll(Arrays.asList(24, 3, 3));
         arrivalTime.addAll(Arrays.asList(0, 0, 0));
 
         scheduler.prepararFila(filaProcessos, burstTime, arrivalTime);
-        scheduler.ordenarFCFS();
-        scheduler.ordenarRoundRobin();
+        scheduler.schedulerFCFS();
+        scheduler.schedulerRoundRobin();
     }
 }

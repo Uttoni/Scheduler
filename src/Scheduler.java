@@ -1,5 +1,3 @@
-import jdk.swing.interop.SwingInterOpUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,10 +6,8 @@ public class Scheduler {
     private List<String> filaProcessos = null;
     private List<Integer> burstTime = null;
     private List<Integer> arrivalTime = null;
-
     private List<Integer> tempoEspera = new ArrayList();
     private List<Integer> qtdExecutada = new ArrayList<>();
-
     private List<Integer> qtdExecutadaAntes = new ArrayList<>();
     private List<Integer> faltaExecutar = new ArrayList<>();
     private List<Integer> ultimaExecucao = new ArrayList<>();
@@ -30,13 +26,15 @@ public class Scheduler {
         }
     }
 
-    public void ordenarFCFS(){
+    public void schedulerFCFS(){
         int tempoAtual = 0;
 
         System.out.println("-------------------- FCFS --------------------\n");
         for (int i=0; i<filaProcessos.size(); i++) {
             tempoEspera.add(i, tempoAtual);
+            System.out.println("Tempo atual: " + tempoAtual);
             System.out.println("Executando: " + filaProcessos.get(i));
+            System.out.println("");
             tempoAtual += burstTime.get(i);
         }
 
@@ -52,16 +50,18 @@ public class Scheduler {
         System.out.println("Tempo de espera médio: " + tempoEsperaMedio + "\n");
     }
 
-    public void ordenarRoundRobin(){
+    public void schedulerRoundRobin(){
         int quantum = 4;
         int tempoAtual = 0;
 
         System.out.println("-------------------- ROUND ROBIN --------------------\n");
-        System.out.println("Entrei no metodo");
 
         while(tempoTotalExecucao > 0){
             for (int i = 0; i < filaProcessos.size(); i++) {
                 if(tempoAtual >= arrivalTime.get(i) && faltaExecutar.get(i) > 0){
+
+                    System.out.println("Tempo atual: " + tempoAtual);
+                    System.out.println("Executando: " + filaProcessos.get(i));
 
                     if(qtdExecutada.get(i) != burstTime.get(i)){
                         ultimaExecucao.set(i, tempoAtual);
@@ -84,6 +84,9 @@ public class Scheduler {
 
                     int executado = burstTime.get(i) - faltaExecutar.get(i);
                     qtdExecutada.set(i, executado);
+
+                    System.out.println("Quantidade a ser processada: " + qtdExecutada.get(i));
+                    System.out.println("");
                 }
 
                 if(tempoTotalExecucao == 0) {
