@@ -17,12 +17,7 @@ public class Scheduler {
     private List<Integer> ultimaExecucao = new ArrayList<>();
     private int tempoTotalExecucao = 0;
 
-    public void prepararNaoPreemptivo(List filaProcessos, List burstTime){
-        this.filaProcessos = filaProcessos;
-        this.burstTime = burstTime;
-    }
-
-    public void prepararPreemptivo(List filaProcessos, List burstTime, List arrivalTime){
+    public void prepararFila(List filaProcessos, List burstTime, List arrivalTime){
         this.filaProcessos = filaProcessos;
         this.burstTime = burstTime;
         this.arrivalTime = arrivalTime;
@@ -65,27 +60,13 @@ public class Scheduler {
         System.out.println("Entrei no metodo");
 
         while(tempoTotalExecucao > 0){
-            int processosExecutados = 0;
             for (int i = 0; i < filaProcessos.size(); i++) {
                 if(tempoAtual >= arrivalTime.get(i) && faltaExecutar.get(i) > 0){
-
-//                    System.out.println("Processos: " + filaProcessos.get(i));
-//                    System.out.println("burst time: " + burstTime.get(i));
-//                    System.out.println("arrival time: " + arrivalTime.get(i));
-//                    System.out.println("ultimaExecucao: " + ultimaExecucao.get(i));
-//                    System.out.println("faltaExecutar: " + faltaExecutar.get(i) + "\n");
-//                    System.out.println("Tempo total de execução while: " + tempoTotalExecucao);
-
-                    for (int j = 0; j < faltaExecutar.size(); j++) {
-                        if(faltaExecutar.get(j) == 0)
-                            processosExecutados++;
-                    }
 
                     if(qtdExecutada.get(i) != burstTime.get(i)){
                         ultimaExecucao.set(i, tempoAtual);
                         qtdExecutadaAntes.set(i, qtdExecutada.get(i));
                     }
-
 
                     if(quantum > faltaExecutar.get(i)) {
                         tempoAtual = tempoAtual + faltaExecutar.get(i);
@@ -99,18 +80,11 @@ public class Scheduler {
 
                         int falta = faltaExecutar.get(i);
                         faltaExecutar.set(i, (falta - quantum));
-
-
                     }
 
                     int executado = burstTime.get(i) - faltaExecutar.get(i);
                     qtdExecutada.set(i, executado);
-
-
                 }
-                System.out.println("I: " + i + "-------------------");
-                System.out.println("Quantidade executada: " + qtdExecutada.get(i));
-                System.out.println("ultimaExecucao: " + ultimaExecucao.get(i));
 
                 if(tempoTotalExecucao == 0) {
                     break;

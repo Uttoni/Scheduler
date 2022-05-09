@@ -15,8 +15,8 @@ public class Principal {
         burstTime.addAll(Arrays.asList(5, 6, 8));
         arrivalTime.addAll(Arrays.asList(0, 0, 0));
 
-
-        scheduler.prepararPreemptivo(filaProcessos, burstTime, arrivalTime);
+        scheduler.prepararFila(filaProcessos, burstTime, arrivalTime);
+        scheduler.ordenarFCFS();
         scheduler.ordenarRoundRobin();
     }
 }
